@@ -1,7 +1,6 @@
 package core.subsystems;
 
 import config.DriveConfig;
-import config.DriveConfigDefault;
 import util.MyJoy;
 
 public class Drive extends drive.Drive{
@@ -14,7 +13,6 @@ public class Drive extends drive.Drive{
 	
 	public Drive() {
 		super(new DriveConfig(), MyJoy.getInstance());
-		// TODO Auto-generated constructor stub
 	}
 
 }

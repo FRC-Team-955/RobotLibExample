@@ -5,6 +5,7 @@ import auto.AutoModeExecutor;
 import config.LoopConfig;
 import core.subsystems.Drive;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import util.logging.CsvLogger;
 import util.loops.Looper;
 
 /**
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot {
 	Teleop teleop = new Teleop();
 	
 	Looper looper = new Looper(new LoopConfig());
+	Looper logLooper = new Looper(new LoopConfig());
 	AutoModeExecutor autoModeExecutor;
 
 	/**
@@ -29,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		looper.register(drive.getLoop());
 		looper.register(teleop.getLoop());
+		logLooper.register(CsvLogger.getLoop());
 		AutoChooser.init();
 	}
 
@@ -37,6 +40,7 @@ public class Robot extends IterativeRobot {
 		try {
 			// Start loop for subsystems
 			looper.start();
+			logLooper.start();
 			// Create auto executor, pull mode from dashboard, and start executing slected mode
 			autoModeExecutor = new AutoModeExecutor();
 			autoModeExecutor.setMode(AutoChooser.getAutoMode());
@@ -51,6 +55,7 @@ public class Robot extends IterativeRobot {
 		try {
 			// Start subsystem loop
 			looper.start();
+			logLooper.start();
 			// Set drive to open loop joystick mode
 			drive.openLoopJoyMode();
 		} catch (Exception e) {
@@ -61,6 +66,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		looper.stop();
+		logLooper.stop();
 	}
 	
 }
